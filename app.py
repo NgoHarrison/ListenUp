@@ -1,6 +1,8 @@
 from flask import Flask
+from firebase import firebase
 
 app=Flask(__name__)
+firebase = firebase.FirebaseApplication('change this', None)
 
 @app.route("/")
 def home():
