@@ -1,0 +1,107 @@
+<style>
+
+body{
+  margin:0;
+  padding:0;
+  background-color: #FBEAEB;
+  background-size:cover;
+  background-position:center;
+  font-size: 16px;
+  font-family: Geneva, sans-serif;
+  font-weight: 400;
+
+}
+
+h1{
+  margin:0;
+  padding: 0 0 20px;
+  text-align:center;
+  font-size:21px;
+}
+
+.container{
+  width:300px;
+  height:500px;
+  background:	#b19cd9;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  box-sizing:border-box;
+  padding: 70px 40px;
+
+}
+p{
+  margin:0;
+  padding:0;
+  font-weight:bold;
+}
+::placeholder {
+  color: white;
+  opacity: 1;
+}
+.container input{
+  width:100%;
+  margin-bottom: 20px;
+}
+.container input[type="text"], input[type="password"]{
+  border:none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height:40px;
+  color: #fff;
+  font-size:16px;
+
+}
+
+.container input[type="submit"]{
+  border:none;
+  outline: none;
+  height: 40px;
+  background: #fff;
+  color: #000;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.container input[type="submit"]:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.cancelbtn {
+  width: auto;
+  border:none;
+  outline: none;
+  height: 40px;
+  padding: 10px 18px;
+  background-color: #f44336;
+  color: #000;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+
+</style>
+
+<html>
+<head>
+<title>Log in</title>
+<body>
+<div class = "container">
+  <h1>Login</h1>
+  <form>
+    <p>Username</p>
+    <input type="text" name="" placeholder="Enter username">
+    <p>Password</p>
+    <input type="password" name="" placeholder="Enter password">
+    <input type="submit" name="" value = "Log in!">
+    <a href="index.html">
+    <button type="button" class="cancelbtn">Go back</button>
+    </a>
+  
+     </form>
+</div>
+</body>
+</head>
+</html>
