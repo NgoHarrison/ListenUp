@@ -69,17 +69,7 @@ p{
 .container input[type="submit"]:hover{
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
-.cancelbtn {
-  width: auto;
-  border:none;
-  outline: none;
-  height: 40px;
-  padding: 10px 18px;
-  background-color: #f44336;
-  color: #000;
-  font-size: 18px;
-  border-radius: 20px;
-}
+
 
 
 </style>
@@ -90,15 +80,16 @@ p{
 <body>
 <div class = "container">
   <h1>Login</h1>
-  <form>
+  <form action="" method="POST">
+      <div class="form-container">
     <p>Username</p>
-    <input type="text" name="" placeholder="Enter username">
-    <p>Password</p>
-    <input type="password" name="" placeholder="Enter password">
-    <input type="submit" name="" value = "Log in!">
-    <a href="index.html">
-    <button type="button" class="cancelbtn">Go back</button>
-    </a>
+    <input type="text" name="username" class="form" placeholder="Enter username" value = {{ request.form.username }}>
+      </div>
+      <div class="form-container">
+      <p>Password</p>
+    <input type="password" name="password" class="form" placeholder="Enter password" value = {{ request.form.password }}>
+      </div>
+      <input type="submit" class="submitbutton" value = "Log in!"></input>
   
      </form>
 </div>
