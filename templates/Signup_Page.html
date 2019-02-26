@@ -20,8 +20,8 @@ h1{
 }
 
 .container{
-  width:300px;
-  height:500px;
+  width:700px;
+  height:600px;
   background:	#b19cd9;
   color: #fff;
   top: 50%;
@@ -76,18 +76,26 @@ p{
 
 <html>
 <head>
-<title>Log in</title>
+<title>Sign Up</title>
 <body>
+{%  include '_messages.html' %}
 <div class = "container">
   <h1>Login</h1>
-  <form>
-    <p>Username</p>
-    <input type="text" name="" placeholder="Enter username">
-    <p>Password</p>
-    <input type="password" name="" placeholder="Enter password">
-    <p>Email</p>
-    <input type="email" name="" placeholder="Enter email">
-    <input type="submit" name="" value = "Create account">
+{% from "_formhelpers.html" import render_field %}
+  <form method = "POST" action="">
+    <div class="form">
+        {{ render_field(form.username,class="username") }}
+    </div>
+       <div class="form">
+        {{ render_field(form.email,class="email") }}
+    </div>
+      <div class="form">
+        {{ render_field(form.password,class="password") }}
+    </div>
+      <div class="form">
+        {{ render_field(form.confirmpassword,class="confirmpassword") }}
+    </div>
+    <input type="submit" value = "Create account">
 
 
      </form>
@@ -95,3 +103,5 @@ p{
 </body>
 </head>
 </html>
+
+
