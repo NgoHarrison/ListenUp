@@ -1,7 +1,7 @@
 from logging.handlers import RotatingFileHandler
 
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from flask_mysqldb import MySQL
+from flaskmysqldb import MySQL
 import logging
 from passlib.hash import sha256_crypt
 from .forms import SignupForm
