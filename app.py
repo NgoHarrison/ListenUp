@@ -68,6 +68,10 @@ def signup_page():
 
     return render_template("Signup_Page.html", form=form)
 
+@app.route('/topic/<topic_id>')
+def topic(topic_id):
+    # show the user profile for that user
+    return render_template('topic_page.html',topic=topic_id) 
 
 if __name__ == "__main__":
     handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
