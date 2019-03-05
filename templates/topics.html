@@ -1,0 +1,10 @@
+<htmt>
+<body>
+<h1>Topic Index</h1>
+<ul id="topics">
+{% for topic in topics%}
+<li><a href="{{ topic.link }}">{{ topic.title }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
