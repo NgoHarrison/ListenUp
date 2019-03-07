@@ -77,6 +77,13 @@ p{
 <html>
 <head>
 <title>Log in</title>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 <body>
 <div class = "container">
   <h1>Login</h1>
