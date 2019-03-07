@@ -1,7 +1,7 @@
 from logging.handlers import RotatingFileHandler
 
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from flaskmysqldb import MySQL
+from flask_mysqldb import MySQL
 import logging
 from passlib.hash import sha256_crypt
 from .forms import SignupForm
@@ -41,7 +41,9 @@ def login_page():
 
             if sha256_crypt.verify(password, real_password):
                 app.logger.info('You have successfully logged in')
+                return redirect(url_for('profile'))
             else:
+                flash('You have entered an incorrect username/password!')
                 app.logger.info('You have entered an incorrect password')
 
         else:
@@ -67,7 +69,9 @@ def signup_page():
 
 
     return render_template("Signup_Page.html", form=form)
-
+@app.route("/profile.html", methods = ['GET','POST'])
+def profile():
+    return render_template("profile.html")
 
 if __name__ == "__main__":
     handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)

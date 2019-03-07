@@ -1,92 +1,27 @@
-<style>
-body, html {
-  height: 100%;
-  background: 	#ffe4e1;
-  font-size: 16px;
-  font-family: Geneva, sans-serif;
-  font-weight: 400;
-  line-height: 1.8em;
-  color: #C0C0C0;
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  z-index: 15;
-  top: 50%;
-  left: 50%;
-  margin: -100px 0 0 -150px;
-
-}
-.container{
-  display: inline-block;
-}
-.main{
-  text-align: center;
-  position: relative;
-
-}
-h1{
-  padding: 20px 20px;
-  text-align: center;
-  color: #FF3030;
-  font-size: 80px;
-}
-
-.button{
-border-radius: 4px;
-background-color: #f4511e;
-border: none;
-color: #FFFFFF;
-text-align: center;
-font-size: 28px;
-padding: 20px;
-width: 200px;
-transition: all 0.5s;
-cursor: pointer;
-margin: 5px;
-}
-
-.button span {
-cursor: pointer;
-display: inline-block;
-position: relative;
-transition: 0.5s;
-}
-
-
-.button span:after {
-content: '\00bb';
-position: absolute;
-opacity: 0;
-top: 0;
-right: -20px;
-transition: 0.5s;
-}
-
-.button:hover span {
-padding-right: 25px;
-}
-
-.button:hover span:after {
-opacity: 1;
-right: 0;
-}
-</style>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> ListenUp </title>
-     <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <link rel="stylesheet" href="../static/styles/index.css">
   </head>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
   <body>
     <div class = "main">
       <h1 class = "title">
         ListenUp
       </h1>
       <div class="container">
-        <a href = "Login_Page.html">
+        <a href = {{ url_for('login_page') }}>
         <button class="button"><span>Login</span></button>
       </a>
-      <a href = "Signup_Page.html">
+      <a href = {{ url_for('signup_page') }}>
         <button class = "button"><span>Sign up </span></button>
       </a>
       </div>
