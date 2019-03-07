@@ -1,0 +1,209 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cont",
+				"contact_view"
+			],
+			[
+				"home",
+				"home_view"
+			],
+			[
+				"exce",
+				"execute_from_command_line"
+			],
+			[
+				"ex",
+				"except"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/alexpena/dev/try_django/src/templates/bootstrap/css/heroic-features.css",
+		"/Users/alexpena/dev/try_django/src/trydjango/trydjango/settings.py",
+		"/Users/alexpena/dev/try_django/src/templates/startbootstrap-heroic-features-gh-pages/index.html",
+		"/Users/alexpena/dev/try_django/src/templates/index.html",
+		"/Users/alexpena/dev/try_django/src/trydjango/pages/models.py",
+		"/Users/alexpena/dev/try_django/src/templates/home.html",
+		"/Users/alexpena/dev/try_django/src/trydjango/pages/views.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/sale/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/items_sold/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/sale/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/purchases/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/purchases/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/transactions/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/users/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/manage.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/products/migrations/0002_auto_20190211_0525.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/items_sold/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/trydjango/urls.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/transactions/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/on_sale/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/sold_product/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/sold_product/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/products/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/users/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/db.sqlite3",
+		"/Users/alexpena/dev/try_django/src/trydjango/on_sale/admin.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/products/models.py",
+		"/Users/alexpena/dev/try_django/src/trydjango/products/migrations/admin.py",
+		"/Users/alexpena/.Trash/admin.py"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "app.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 222.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

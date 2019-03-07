@@ -1,0 +1,2 @@
+# Automatically generate this with pip freeze
+# firebase-orm, firebase, flask-login, flask
