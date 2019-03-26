@@ -63,18 +63,30 @@ def signup_page():
         cur.execute("INSERT INTO users(username,email,password) VALUES (%s, %s,%s)" , (username,email,password))
 
         mysql.connection.commit()
-        cur.close()
+       
         flash('You have successfully registered!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('profile'))
 
 
     return render_template("Signup_Page.html", form=form)
+
+#redirect to account after login
 @app.route("/profile.html", methods = ['GET','POST'])
 def profile():
     return render_template("profile.html")
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html', user=user, posts=posts)   
 
 if __name__ == "__main__":
     handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.run(debug=True, host="127.0.0.1")
+    app.run(debug=True, host="127.0.0.1", port = 3306)
