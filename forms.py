@@ -24,3 +24,11 @@ class LoginForm(Form):
         validators.DataRequired(),
         validators.EqualTo('confirmpassword', message='Your passwords do not match')
     ], render_kw={"placeholder": "Enter your password..."})
+
+class EditProfile(Form):
+    name = StringField('name', [validators.Length(min=3, max=25)],
+                           render_kw={"placeholder": "Enter your name..."})
+    bio = StringField('bio', [validators.Length(min=6, max=35), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a bio..."})
+    title = StringField('title', [validators.Length(min=6, max=35), validators.DataRequired()],
+                        render_kw={"title": "Enter your title..."})

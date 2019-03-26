@@ -4,25 +4,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel = "stylesheet" href = "../static/styles/signup.css"
 </head>
-<title>Sign Up</title>
+<title>Edit Profile</title>
 #{% block body %}
 <div class = "container">
-  <h1>Register</h1>
+  <h1>Edit Profile</h1>
 {% from "_formhelpers.html" import render_field %}
   <form method = "POST" action="">
     <div class="form">
-        {{ render_field(form.username,class="username") }}
+        {{ render_field(form.name,class="name") }}
     </div>
        <div class="form">
-        {{ render_field(form.email,class="email") }}
+        {{ render_field(form.bio,class="bio") }}
     </div>
       <div class="form">
-        {{ render_field(form.password,class="password") }}
+        {{ render_field(form.title,class="title") }}
     </div>
-      <div class="form">
-        {{ render_field(form.confirmpassword,class="confirmpassword") }}
-    </div>
-    <input type="submit" value = "Create account">
+    <input type="submit" value = "Submit">
 
 
      </form>
@@ -30,5 +27,3 @@
 {% endblock %}
 
 </html>
-
-

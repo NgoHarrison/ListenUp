@@ -50,6 +50,9 @@ def login_page():
             app.logger.info('No users with that username found')
     return render_template("Login_Page.html")
 
+
+
+
 @app.route("/signup_page", methods = ['GET','POST'])
 def signup_page():
     form = SignupForm(request.form)
@@ -70,13 +73,33 @@ def signup_page():
 
     return render_template("Signup_Page.html", form=form)
 
-#redirect to account after login
+@app.route("/edit_profile", methods = ['GET','POST'])
+def edit_profile():
+    
+    if request.method =='POST' and form.validate():
+        name=form.name.data
+        bio=form.bio.data
+        title=form.title.data 
+        cur = mysql.connection.cursor()
+
+
+        cur.execute("INSERT INTO users(name,bio,title) VALUES (%s, %s,%s)" , (name,bio,title))
+
+        mysql.connection.commit()
+       
+        flash('You have successfully edited your profile!', 'success')
+        return redirect(url_for('profile'))
+
+
+    return render_template("editprofile.html", form=form)
+
+
+
 @app.route("/profile.html", methods = ['GET','POST'])
 def profile():
     return render_template("profile.html")
 
 @app.route('/user/<username>')
-@login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html', user=user)   
