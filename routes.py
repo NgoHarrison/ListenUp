@@ -3,8 +3,9 @@ from .forms import SignupForm, EditProfile
 from passlib.hash import sha256_crypt
 from .forms import SignupForm, LoginForm
 from ListenUp import app,db
-from .models import User,Arguments
+from .models import User, Arguments
 from flask_login import login_user
+from sqlalchemy import update
 
 @app.route("/")
 def home():
@@ -51,15 +52,16 @@ def logout():
 @app.route("/edit_profile", methods=['GET', 'POST'])
 def edit_profile():
     form = EditProfile(request.form)
-    if request.method == 'POST' and form.validate():
-        if request.method == 'POST' and form.validate():
 
-            profile = Profile(name=form.name.data, bio=form.bio.data, title=form.title.data)
-            db.session.add(profile)
-            db.session.commit()
-            flash('You have successfully edited profile!', 'success')
-            return redirect(url_for('discussionhome'))
-        return render_template("", form=form)
+    if request.method == 'POST' and form.validate():
+        #update values
+        db.session.query(User).filter(User.name == form.name).update({'name': str(form.name),})
+        db.session.query(User).filter(User.bio == form.bio).update({'bio': 'New Foobar Name!'})
+        db.session.query(User).filter(User.location == form.location).update({'location': 'New Foobar Name!'})
+        db.session.commit()
+
+        flash('You have successfully edited profile!', 'success')
+        return redirect(url_for('discussionhome'))
     return render_template("editprofile.html", form=form)
 
 

@@ -1,6 +1,8 @@
 from ListenUp.models import User
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms.validators import ValidationError
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 
 class SignupForm(Form):
     username = StringField('Username', [validators.Length(min=3, max=25),validators.DataRequired()],render_kw={"placeholder": "Enter your name..."})
@@ -31,11 +33,15 @@ class LoginForm(Form):
         validators.EqualTo('confirmpassword', message='Your passwords do not match')
     ], render_kw={"placeholder": "Enter your password..."})
 
+
+photos = UploadSet('photos', IMAGES)
+
 #edit profile form
 class EditProfile(Form):
+    #photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
     name = StringField('name', [validators.Length(min=3, max=30)],
                            render_kw={"placeholder": "Enter your name..."})
-    bio = StringField('bio', [validators.Length(min=6, max=200), validators.DataRequired()],
+    bio = StringField('bio', [validators.Length(min=6, max=250), validators.DataRequired()],
                         render_kw={"placeholder": "Enter a bio..."})
-    title = StringField('title', [validators.Length(min=6, max=35), validators.DataRequired()],
-                        render_kw={"title": "Enter your title..."})
+    location = StringField('location', [validators.Length(min=6, max=200), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a location..."})
