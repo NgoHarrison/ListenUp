@@ -72,23 +72,23 @@ li a:hover:not(.active) {
   <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
 </ul>
 <div class = "buttons">
-    <a href = {{ url_for('new_debate') }}>
-    <button class="button newdebate">New debate</button>
+    <a href = {{ url_for('new_argument') }}>
+    <button class="button argument">Post argument</button>
     </a>
 </div>
 
 
 
 <div class="message_container">
-    {% for argument in arguments %}
     <div class = "box">
         <p>
-	<span class="title"><a href="topics/{{ argument.id }}"> {{ argument.title }}</a></span>
-        <br>
-        <span class="username">{{ argument.author.username }}</span>
+	<span class="title">{{ main_argument.title }}</span>
+	<br> <span class="mainargument"> {{ main_argument.content }} </span> <br> 
+	<span class="arguments">{% for argument in children %}
+		{{ argument.text }}<br> 
+	{% endfor %} </span>
         <br>
         </p>
-        {% endfor %}
     </div>
 </div>
 </body>
