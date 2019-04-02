@@ -45,3 +45,9 @@ class EditProfile(Form):
                         render_kw={"placeholder": "Enter a bio..."})
     location = StringField('location', [validators.Length(min=6, max=200), validators.DataRequired()],
                         render_kw={"placeholder": "Enter a location..."})
+
+class EditAccount(Form):
+    username = StringField('username', [validators.Length(min=3, max=30)],
+                           render_kw={"placeholder": "Enter a new username..."})
+    email = StringField('email', [validators.Length(min=6, max=250), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a new email..."})
