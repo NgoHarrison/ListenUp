@@ -22,7 +22,14 @@ ul {
 li {
   float: left;
 }
-
+.message_container{
+ width: 320px;
+  padding: 10px;
+  border: 5px solid green;
+  margin: 0;
+}
+.box{
+}
 li a {
   display: block;
   color: white;
@@ -33,6 +40,23 @@ li a {
 
 li a:hover:not(.active) {
   background-color: #111;
+}
+
+.newdebate {
+  background-color: #04A777;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 10px 10px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+    .newdebate:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 
@@ -47,9 +71,25 @@ li a:hover:not(.active) {
   <li><a href="">Account</a></li>
   <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
 </ul>
+<div class = "buttons">
+    <a href = {{ url_for('new_debate') }}>
+    <button class="button newdebate">New debate</button>
+    </a>
+</div>
+
+
 
 <div class="message_container">
-
+    {% for argument in arguments %}
+    <div class = "box">
+        <p>
+         <span class="title">{{ argument.title }}</span>
+        <br>
+        <span class="username">{{ argument.author.username }}</span>
+        <br>
+        </p>
+        {% endfor %}
+    </div>
 </div>
 </body>
 </html>
