@@ -11,7 +11,6 @@ pkginfo==1.4.2
 py==1.5.3
 PyMySQL==0.9.3
 requests==2.18.4
-rvirtualenv==16.4.1
 wcwidth==0.1.7
 webencodings==0.5.1
 Werkzeug==0.14.1
