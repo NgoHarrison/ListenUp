@@ -1,5 +1,5 @@
 from ListenUp.models import User
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField
 from wtforms.validators import ValidationError
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
