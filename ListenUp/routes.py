@@ -1,21 +1,22 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from .forms import SignupForm
 from passlib.hash import sha256_crypt
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, PostArgument
 from ListenUp import app,db
 from .models import User,Arguments
-from flask_login import login_user
+from flask_login import login_user, login_required, current_user
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Make this actually work
+
 @app.route("/login_page" ,methods = ['GET','POST'])
 def login_page():
     form = LoginForm(request.form)
     if request.method == 'POST':
-        app.logger.info('Hereeeee')
+        #app.logger.info('Hereeeee')
         user = User.query.filter_by(email = form.email.data).first()
         if user and sha256_crypt.verify(form.password.data,user.password):
             login_user(user)
@@ -38,10 +39,31 @@ def signup_page():
 
 
 @app.route("/discussionhome", methods = ['GET','POST'])
+@login_required
 def discussionhome():
-    return render_template("discussionhome.html")
+    arguments = Arguments.query.all()
+    #list_of_arguments = []
+    #for argument in arguments:
+        #arg = {'title': argument.title}
+        #list_of_arguments.append(arg)
+    #app.logger.info(arguments)
+    return render_template("discussionhome.html", arguments = arguments)
 
 @app.route("/logout.html", methods = ['GET','POST'])
+@login_required
 def logout():
     flash('You have successfully logged out!')
     return render_template("index.html")
+
+
+@app.route("/discussionhome/new",methods = ['GET','POST'])
+@login_required
+def new_debate():
+    form = PostArgument(request.form)
+    if request.method == 'POST' and form.validate():
+        argument = Arguments(title=form.title.data,content=form.content.data,author = current_user)
+        db.session.add(argument)
+        db.session.commit()
+        flash('You have succesfully posted!')
+        return redirect(url_for('discussionhome'))
+    return render_template('create_debate.html', title = 'New debate', form = form)
