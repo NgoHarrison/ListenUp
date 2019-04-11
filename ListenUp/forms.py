@@ -1,5 +1,5 @@
 from ListenUp.models import User
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField
 from wtforms.validators import ValidationError
 
 class SignupForm(Form):
@@ -30,3 +30,9 @@ class LoginForm(Form):
         validators.DataRequired(),
         validators.EqualTo('confirmpassword', message='Your passwords do not match')
     ], render_kw={"placeholder": "Enter your password..."})
+
+class PostArgument(Form):
+    title = StringField('Title', [validators.Length(min=3, max=25)],
+                           render_kw={"placeholder": "Enter title..."})
+    content = TextAreaField('content', [validators.Length(min=1, max=300), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter content..."})
