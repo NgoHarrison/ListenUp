@@ -5,7 +5,7 @@
     <link rel = "stylesheet" href = "../static/styles/signup.css"
 </head>
 <title>Sign Up</title>
-
+{% extends "layout.html" %}
 {% block body %}
 <div class = "container">
   <h1>Register</h1>
@@ -23,7 +23,7 @@
       <div class="form">
         {{ render_field(form.confirmpassword,class="confirmpassword") }}
     </div>
-    <input type="submit" value = "Create account">
+    <input name = "create" type="submit" value = "Create account">
 
 
      </form>
