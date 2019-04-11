@@ -68,3 +68,9 @@ def new_debate():
         flash('You have succesfully posted!')
         return redirect(url_for('discussionhome'))
     return render_template('create_debate.html', title = 'New debate', form = form)
+
+@app.route("/discussionhome/expand", methods = ['GET', 'POST'])
+@login_required
+def expand_debate():
+    return render_template('expand_debate.html')
+
