@@ -89,16 +89,18 @@ p{
   <h1>Login</h1>
   <form action="" method="POST">
       <div class="form-container">
-    <p>Username</p>
-    <input type="text" name="username" class="form" placeholder="Enter username" value = {{ request.form.username }}>
+    <p>Email</p>
+    <input type="text" name="email" class="form" placeholder="Enter email" value = {{ request.form.username }}>
       </div>
       <div class="form-container">
       <p>Password</p>
     <input type="password" name="password" class="form" placeholder="Enter password" value = {{ request.form.password }}>
       </div>
-      <input type="submit" class="submitbutton" value = "Log in!"></input>
+      <input name = "login" type="submit" class="submitbutton" value = "Log in!"></input>
   
      </form>
+
+
 </div>
 </body>
 </head>
