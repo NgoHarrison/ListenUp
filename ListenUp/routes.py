@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-from .forms import SignupForm
 from passlib.hash import sha256_crypt
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, EditAccount, EditProfile
 from ListenUp import app,db
-from .models import User,Arguments
-from flask_login import login_user
+from .models import User, Arguments
+from flask_login import login_user, current_user
+from sqlalchemy import update, literal_column
 
 @app.route("/")
 def home():
@@ -41,7 +41,56 @@ def signup_page():
 def discussionhome():
     return render_template("discussionhome.html")
 
+@app.route("/account", methods = ['GET','POST'])
+def account():
+    return render_template("account.html")
+
+@app.route("/profile", methods = ['GET','POST'])
+def profile():
+    return render_template("profile.html")
+
 @app.route("/logout.html", methods = ['GET','POST'])
 def logout():
     flash('You have successfully logged out!')
     return render_template("index.html")
+
+
+#Route to edit profile form
+@app.route("/edit_profile", methods=['GET', 'POST'])
+def edit_profile():
+    form = EditProfile(request.form)
+
+    if request.method == 'POST' and form.validate():
+        #update profile values
+        a_user = db.session.query(User).filter(User.id == 3).one()
+        a_user.name = str(form.name.data)
+        a_user.bio = str(form.bio.data)
+        a_user.location = str(form.location.data)
+        db.session.commit()
+
+
+        flash('You have successfully edited profile!', 'success')
+        return redirect(url_for('discussionhome'))
+    return render_template("editprofile.html", form=form)
+
+#Route to edit account form
+@app.route("/edit_account", methods=['GET', 'POST'])
+def edit_account():
+    form = EditAccount(request.form)
+
+    if request.method == 'POST' and form.validate():
+        # update account values
+        a_user = db.session.query(User).filter(User.id == 3).one()
+        a_user.username = str(form.username.data)
+        a_user.email = str(form.email.data)
+        db.session.commit()
+        #update values
+        #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})
+        #db.session.query(User).filter(User.email == form.email).update({'bio': 'New Foobar Name!'})
+        #db.session.commit()
+
+        flash('You have successfully edited account!', 'success')
+        return redirect(url_for('discussionhome'))
+    return render_template("editaccount.html", form=form)
+
+
