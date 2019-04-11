@@ -4,7 +4,7 @@ from passlib.hash import sha256_crypt
 from .forms import SignupForm, LoginForm, PostArgument
 from ListenUp import app,db
 from .models import User,Arguments
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 
 
 @app.route("/")
@@ -53,6 +53,7 @@ def discussionhome():
 @login_required
 def logout():
     flash('You have successfully logged out!')
+    logout_user()
     return render_template("index.html")
 
 
