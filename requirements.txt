@@ -20,3 +20,4 @@ gunicorn==19.9.0
 Flask-SQLAlchemy==2.3.2
 Flask-Login==0.4.1
 fstring==1.7.4
+astroid==2.2.5
