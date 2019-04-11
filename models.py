@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+
 from wtforms import FileField
 from sqlalchemy import create_engine, LargeBinary
 from ListenUp import db,login_manager
@@ -8,6 +9,9 @@ from flask_wtf.file import FileRequired
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
+from ListenUp import db,login_manager
+from datetime import datetime
 
 
 
@@ -28,6 +32,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(64), nullable=True)
     location = db.Column(db.String(64), nullable=True)
     bio = db.Column(db.String(250), nullable=True)
+
+    #image in progress
+    #image = Column(LargeBinary, nullable=True)
 
     #image in progress
     #image = Column(LargeBinary, nullable=True)
