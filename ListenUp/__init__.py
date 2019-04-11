@@ -24,11 +24,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users.db'
 
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
 login_manager = LoginManager(app)
 from ListenUp import routes
 
-if __name__== '__main__ ':
-    manager.run()

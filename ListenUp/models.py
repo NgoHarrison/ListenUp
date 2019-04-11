@@ -1,13 +1,6 @@
 from flask_login import UserMixin
-from wtforms import FileField
-from sqlalchemy import create_engine, LargeBinary
 from ListenUp import db,login_manager
 from datetime import datetime
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.file import FileRequired
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 
 
 
@@ -25,9 +18,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     arguments = db.relationship('Arguments', backref='author', lazy=True)
-    name = db.Column(db.String(64), nullable=True)
-    location = db.Column(db.String(64), nullable=True)
-    bio = db.Column(db.String(250), nullable=True)
 
     #image in progress
     #image = Column(LargeBinary, nullable=True)
