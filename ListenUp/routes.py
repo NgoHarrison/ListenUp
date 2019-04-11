@@ -71,5 +71,5 @@ def new_debate():
 @app.route("/discussionhome/expand", methods = ['GET', 'POST'])
 @login_required
 def expand_debate():
-    return render_template('expand_debate.html')
+    return render_template('expand_debate.html', title = request.args.get('title'), argument = request.args.get('content'))
 
