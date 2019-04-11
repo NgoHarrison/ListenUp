@@ -17,3 +17,4 @@ Werkzeug==0.14.1
 widgetsnbextension==3.2.1
 WTForms==2.2.1
 gunicorn==19.9.0
+Flask-SQLAlchemy==2.3.2
