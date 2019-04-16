@@ -1,14 +1,12 @@
 from logging.handlers import RotatingFileHandler
-
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_mysqldb import MySQL
 import logging
 from passlib.hash import sha256_crypt
 from .forms import SignupForm
-
+from flask.ext.login import login_required
 
 import sys
-
 
 app=Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -20,8 +18,6 @@ app.config['MYSQL_CURSORCLASS']='DictCursor'
 app.secret_key='secret123'
 
 mysql=MySQL(app)
-
-
 
 @app.route("/")
 def home():
@@ -71,7 +67,7 @@ def signup_page():
     return render_template("Signup_Page.html", form=form)
 
 #redirect to account after login
-@app.route("/profile.html", methods = ['GET','POST'])
+@app.route("/profile", methods = ['GET','POST'])
 def profile():
     return render_template("profile.html")
 
