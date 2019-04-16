@@ -77,7 +77,7 @@ li a:hover:not(.active) {
     {% for argument in arguments %}
     <div class = "box">
         <p>
-        <a href = {{ url_for('expand_debate') }}>
+        <a href = {{ url_for('expand_debate', title = argument.title, content = argument.content) }}>
          <span class="title"> {{ argument.title }}</span>
         </a>
         <br>
