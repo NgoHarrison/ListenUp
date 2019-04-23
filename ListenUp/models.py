@@ -20,7 +20,7 @@ class User(db.Model,UserMixin):
     password = db.Column(db.String(60), nullable=False)
     arguments = db.relationship('Arguments', backref='author', lazy=True)
     single_arguments = db.relationship('singleArgument', backref='author', lazy=True)
-
+    hasLikedList  = db.Column(db.String(1000)) # Python list of arg ids that the user liked
 
     def __repr__(self):
         return ""
@@ -47,7 +47,6 @@ class Arguments(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-
     single_args = relationship('singleArgument', backref='arguments')
 
     def __repr__(self):
@@ -69,6 +68,9 @@ class singleArgument(db.Model):
     def __repr__(self):
         return ""
 
+
+def amountOfLikes(arg_id):
+    return sum(1 for user in User.query_all() if arg_id in eval(user.hasLikedList))
 
 #Instad of having a agree,disagree in the arguments table, have them in the single argument
 #and also make an empty post. 

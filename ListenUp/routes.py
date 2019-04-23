@@ -10,6 +10,10 @@ from flask_login import login_user, login_required, current_user, logout_user
 def home():
     return render_template("index.html")
 
+@app.route("/like/<arg_id>")
+def like(arg_id):
+     user = load_user(curr_id)
+     user.hasLikedList=user.hasLikedList+[","+str(arg_id)]
 
 @app.route("/login_page" ,methods = ['GET','POST'])
 def login_page():
@@ -46,7 +50,9 @@ def discussionhome():
         #arg = {'title': argument.title}
         #list_of_arguments.append(arg)
     #app.logger.info(arguments)
-    return render_template("discussionhome.html", arguments = arguments)
+    user = load_user(curr_id)
+    likes=user.hasLikedList
+    return render_template("discussionhome.html", arguments = arguments, likes=eval(likes))
 
 @app.route("/logout.html", methods = ['GET','POST'])
 @login_required

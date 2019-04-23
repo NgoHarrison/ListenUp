@@ -81,7 +81,7 @@ li a:hover:not(.active) {
          <span class="title"> {{ argument.title }}</span>
         </a>
         <br>
-        <span class="username">{{ argument.author.username }}</span>
+	<span class="username">{{ argument.author.username }} {% if argument.id in likes %} Liked {% else %} <a href="{{ "/like/" + argument.id }}"> Like </a> {% endfor %} </span>
         <br>
         </p>
         {% endfor %}
