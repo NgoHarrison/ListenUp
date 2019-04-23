@@ -1,0 +1,61 @@
+<!--
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+-->
+<link rel = "stylesheet" href = "../static/styles/expand_debate.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+  <li><a href={{ url_for('discussionhome') }}>Home</a></li>
+  <li><a href="">Profile</a></li>
+  <li><a href="">Account</a></li>
+  <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
+</ul>
+<div class="row">
+    <div class="column-left">
+    <p>Disagreeing arguments</p><br>
+        {% for larg in left_args %}
+            {% if  larg.agree_or_disagree == False%}
+    <div class = "box">
+        <p>
+         <span class="arg"> {{ larg.content }}</span>
+        </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    <div class="column-center">
+        <div class = topicbox style="text-align:center">
+       <p>
+          Title:
+           {{ title }}
+       </p>
+        <p>
+            Content:
+            {{ argument }}
+        </p>
+            <p>
+            Author:
+                {{ author }}
+            </p>
+        </div>
+    </div>
+    <div class="column-right">
+    <p>Agreeing arguments</p><br>
+      {% for rarg in right_args %}
+          {% if rarg.agree_or_disagree==True %}
+    <div class = "box">
+        <p>
+         <span class="arg"> {{ rarg.content }}</span>
+        </p>
+          {% endif %}
+        {% endfor %}
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 from ListenUp.models import User
-from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField, RadioField
 from wtforms.validators import ValidationError
 
 class SignupForm(Form):
@@ -36,3 +36,8 @@ class PostArgument(Form):
                            render_kw={"placeholder": "Enter title..."})
     content = TextAreaField('content', [validators.Length(min=1, max=300), validators.DataRequired()],
                         render_kw={"placeholder": "Enter content..."})
+
+class ExpandDebate(Form):
+
+    content = TextAreaField('content', [validators.Length(min=1, max=300), validators.DataRequired()],
+                            render_kw={"placeholder": "Enter content..."})
