@@ -22,6 +22,7 @@
             {% if  larg.agree_or_disagree == False%}
     <div class = "box">
         <p>
+                <p>{{ larg.author }}</p>
          <span class="arg"> {{ larg.content }}</span>
         </p>
             {% endif %}
@@ -36,12 +37,18 @@
        </p>
         <p>
             Content:
-            {{ argument }}
+            {{ content }}
         </p>
             <p>
             Author:
                 {{ author }}
             </p>
+            <br>
+
+
+         <p> # of Disagree: {{ left_len }}</p>
+         <br>
+            <p># of Agree: {{ right_len }}</p>
         </div>
     </div>
     <div class="column-right">

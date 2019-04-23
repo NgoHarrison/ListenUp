@@ -58,6 +58,7 @@ class singleArgument(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     arguments_id = db.Column(db.Integer,ForeignKey('arguments.id'), nullable=False)
     author_id=db.Column(db.Integer,ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
     content = db.Column(db.Text,nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     agree_or_disagree = db.Column(db.Boolean, default = None)

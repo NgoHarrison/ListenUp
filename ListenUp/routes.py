@@ -88,18 +88,28 @@ def view_debate():
                 a_o_d=True
             else:
                 a_o_d=False
-            app.logger.info("YERRRR "+str(a_o_d))
+            #app.logger.info("YERRRR "+str(a_o_d))
+            use = User.query.filter_by(id=curr_id).first()
+            app.logger.info('YERRRR '+str(use.username))
             expand = singleArgument(arguments_id=request.args.get('argument_id'),author_id=curr_id,
-                                    content=form.content.data, agree_or_disagree=a_o_d)
+                                    content=form.content.data, agree_or_disagree=a_o_d,username=use.username)
             db.session.add(expand)
             db.session.commit()
             right_args = singleArgument.query.all()
             # app.logger.info("IM TIRED "+str(right_args.first().content))
             left_args = singleArgument.query.all()
+            left_len=0
+            right_len=0
+            for arg in left_args:
+                if arg.agree_or_disagree == False:
+                    left_len+=1
+            for arg2 in right_args:
+                if arg2.agree_or_disagree==True:
+                    right_len+=1
             return render_template('view_debate.html', title=request.args.get('title'),
                                    arguments_id=request.args.get('argument_id'),
                                    content=request.args.get('content'), author=request.args.get('author'),
-                                   right_args=right_args, left_args=left_args)
+                                   right_args=right_args, left_args=left_args, left_len=left_len,right_len=right_len)
 
         else:
             right_args = singleArgument.query.all()
@@ -114,10 +124,17 @@ def view_debate():
         right_args = singleArgument.query.all()
         # app.logger.info("IM TIRED "+str(right_args.first().content))
         left_args = singleArgument.query.all()
+        left_len = 0
+        right_len = 0
+        for arg in left_args:
+            if arg.agree_or_disagree == False:
+                left_len += 1
+        for arg2 in right_args:
+            if arg2.agree_or_disagree == True:
+                right_len += 1
         return render_template('view_debate.html', title=request.args.get('title'),
                                arguments_id=request.args.get('argument_id'),
                                content=request.args.get('content'), author=request.args.get('author'),
-                               right_args=right_args, left_args=left_args)
-        #return render_template('view_debate.html', title = request.args.get('title'), argument = request.args.get('content'), author = author.username)
+                               right_args=right_args, left_args=left_args, left_len=left_len, right_len=right_len)#return render_template('view_debate.html', title = request.args.get('title'), argument = request.args.get('content'), author = author.username)
 
 

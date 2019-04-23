@@ -24,6 +24,7 @@ p {
 
 }
 
+
 .column-left{
     float: left;
     width: 33.333%;
@@ -61,4 +62,17 @@ li a {
 }
 li a:hover:not(.active) {
   background-color: #111;
+}
+.aod{
+      list-style-type: none;
+  margin: 0;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.aod_content{
+      display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
