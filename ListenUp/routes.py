@@ -201,7 +201,7 @@ def view_debate():
                 right_len += 1
         app.logger.info("YOLO ")
         return render_template('view_debate.html', title=request.args.get('title'),left_args=left_args,right_args=right_args,
-                               argument_id=request.args.get('argument_id'), content=request.args.get('content'), curr=current_user,
+                               argument_id=request.args.get('argument_id'), content=request.args.get('content'), curr=current_user,left_len=left_len,right_len=right_len,
                                subcontent=request.args.get('subcontent'), org_author=request.args.get('org_author'),author_id=curr_id, org_arg=request.args.get('org_arg'))
 
     else:
