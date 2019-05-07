@@ -20,9 +20,6 @@ li {
   float: left;
 }
 
-p {
-
-}
 
 .column-left{
     float: left;
@@ -49,7 +46,15 @@ p {
     width: 33.333%;
                 border-left: 10px solid #ffffff;
     border-right: 10px solid #ffffff;
-    border-bottom: 10px solid #ffffff;
+    border-bottom: 10px solid #000000;
+    box-sizing: border-box;
+}
+.box{
+
+    border-left: 10px solid #000000;
+    border-right: 10px solid #000000;
+    border-bottom: 10px solid #000000;
+    border-top: 10px solid #000000;
     box-sizing: border-box;
 }
 li a {

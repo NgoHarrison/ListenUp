@@ -11,26 +11,6 @@ body{
   font-weight: 400;
 
 }
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #f4511e;
-}
-li {
-  float: left;
-}
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-li a:hover:not(.active) {
-  background-color: #111;
-}
 
 h1{
   margin:0;
@@ -69,8 +49,9 @@ p{
 .content {
     margin-top: 10px;
     margin-bottom: 20px;
-  width: 500px;
+  width: 620px;
   height: 100px;
+    font-size: 20px;
 
 }
 
@@ -85,12 +66,6 @@ p{
 
 }
 
-table td{
-    color: #FFFFFF;
-}
-.a_o_d{
-    display: inline-block;
-}
 .container input[type="submit"]{
     margin-top: 50px;
   border:none;
@@ -113,40 +88,17 @@ table td{
 <head>
 </head>
 {% block body %}
-<ul>
-  <li><a href={{ url_for('discussionhome') }}>Home</a></li>
-  <li><a href="">Profile</a></li>
-  <li><a href="">Account</a></li>
-  <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
-</ul>
+
 <div class="container">
+{% from "_formhelpers.html" import render_field %}
 <form method = "POST" action="">
-    <div class = "title">
-        <p>
-            {{ title }}
-        </p>
-        <br>
-        <p>
-            {{ content }}
-        </p>
-        <br>
 
-
-        <div class = "a_o_d">
-            <table>
-                <tr><td><input type="radio" id="agree"name="aod" value="agree" style=""> Agree</td>
-                    <td>
-                <input type="radio" id="disagree" name="aod" value="disagree"> Disagree</td>
-            </tr>
-            </table>
-        </div>
-    </div>
        <div class="content">
-        <input type="text" name="content" class="content" placeholder="Enter reason for opinion" value = {{ request.form.content }}>
+        {{ render_field(form.content,class="content") }}
+
     </div>
 
-
-    <input type="submit" value = "Expand debate">
+    <input type="submit" value = "Post new debate">
 
 
      </form>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<style>
+    html{
+        height: 100%;
+    }
+        body{
+  margin:0;
+  padding:0;
+  background-color: #FBEAEB;
+  background-size:cover;
+  background-position:center;
+  font-size: 16px;
+  font-family: Geneva, sans-serif;
+  font-weight: 400;
+}  .row{
+         height: 100%;
+        }
+    ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f4511e;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+    .column-left{
+    float: left;
+    width: 33.333%;
+        border-left: 10px solid #ffffff;
+    border-right: 10px solid #ffffff;
+    border-bottom: 10px solid #ffffff;
+    box-sizing: border-box;
+    height: 100%;
+
+}
+    .column-right{
+    float: right;
+    width: 33.333%;
+    height: 100%;
+                border-left: 10px solid #ffffff;
+    border-right: 10px solid #ffffff;
+    border-bottom: 10px solid #ffffff;
+    box-sizing: border-box;
+}
+
+    .column-center{
+    display: inline-block;
+    height: 100%;
+    width: 33.333%;
+                border-left: 10px solid #ffffff;
+    border-right: 10px solid #ffffff;
+    border-bottom: 10px solid #ffffff;
+    box-sizing: border-box;
+}
+
+</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<ul>
+  <li><a href={{ url_for('discussionhome') }}>Home</a></li>
+  <li><a href="">Profile</a></li>
+  <li><a href="">Account</a></li>
+  <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
+</ul>
+<div class="row">
+    <div class="column-left">
+    <p>Disagreeing arguments</p><br>
+        {% for larg in left_args %}
+            {% if  larg.agree_or_disagree == False%}
+    <div class = "box">
+    {% if larg.username == curr.username %}
+    <a href={{ url_for( 'edit_debate', content=content,subcontent = larg.content, author_id = author_id, author = larg.author.username, argument_id=larg.id)}} style="float:right;">Edit</a>
+        {% endif %}
+        <p>Posted by: {{ larg.author.username }}</p>
+        <p> {{ larg.content }}</p>
+        <a href ={{ url_for('view_debate', content=content,subcontent = larg.content, author_id = author_id, author = larg.author.username, argument_id=larg.id, likes="pressed") }}> <i class="fa fa-thumbs-up"></i></a>{{ larg.likes }}
+        <a href ={{ url_for('view_debate',  content=content,subcontent = larg.content, author_id = author_id, author = larg.author.username, argument_id=larg.id, dislikes="pressed") }}> <i class="fa fa-thumbs-down"></i></a> {{ larg.dislikes }}
+
+    </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+    <div class="column-center">
+        <div class = topicbox style="text-align:center">
+       <p>
+          Title:
+           {{ title }}
+       </p>
+        <p>
+            Content:
+            {{ content }}
+        </p>
+            <p>
+            Author:
+                {{ author }}
+            </p>
+            <br>
+
+<p># of Agree: {{ right_len }}</p>
+
+         <p> # of Disagree: {{ left_len }}</p>
+
+            <br>
+            <div class="container">
+            <form method = "POST" action="">
+                <tr><td><input type="radio" id="1"name="q1" value=1> Agree<input type="radio" id="2" name="q1" value=0> Disagree</td></tr>
+       <div class="content">
+        <input type="text" name="content" class="content" placeholder="Enter reason for opinion" value = {{ request.form.content }}>
+    </div>
+
+
+    <input type="submit" value = "Expand debate">
+
+
+     </form>
+            </div>
+        </div>
+    </div>
+    <div class="column-right">
+    <p>Agreeing arguments</p><br>
+      {% for rarg in right_args %}
+          {% if rarg.agree_or_disagree==True %}
+    <div class = "box">
+{% if rarg.username == curr.username %}
+    <a href={{ url_for( 'edit_debate', content=content,subcontent = rarg.content, author_id = author_id, author = rarg.author.username, argument_id=rarg.id)}} style="float:right;">Edit</a>
+        {% endif %}
+
+                <p>Posted by: {{ rarg.author.username }}</p>
+
+
+              <p>{{ rarg.content }}</p>
+
+              <a href ={{ url_for('view_debate', title=title, content=content,subcontent = rarg.content, author_id = author_id, author = author, argument_id=rarg.id, likes="pressed") }}> <i class="fa fa-thumbs-up"></i></a>{{ rarg.likes }}
+              <a href ={{ url_for('view_debate', title=title, content=content,subcontent = rarg.content, author_id = author_id, author = author, argument_id=rarg.id, dislikes="pressed") }}> <i class="fa fa-thumbs-down"></i></a> {{ rarg.dislikes }}
+          {% endif %}
+        {% endfor %}
+    </div>
+</div>
+</div>
+</body>
+</html>
