@@ -34,10 +34,14 @@ class LoginForm(Form):
 class PostArgument(Form):
     title = StringField('Title', [validators.Length(min=3, max=25)],
                            render_kw={"placeholder": "Enter title..."})
-    content = TextAreaField('content', [validators.Length(min=1, max=300), validators.DataRequired()],
+    content = TextAreaField('Content', [validators.Length(min=1, max=300), validators.DataRequired()],
                         render_kw={"placeholder": "Enter content..."})
 
 class ExpandDebate(Form):
 
-    content = TextAreaField('content', [validators.Length(min=1, max=300), validators.DataRequired()],
+    content = TextAreaField('Content', [validators.Length(min=1, max=300), validators.DataRequired()],
                             render_kw={"placeholder": "Enter content..."})
+
+class editDebate(Form):
+    content = TextAreaField('Content', [validators.Length(min=1, max=300), validators.DataRequired()],
+                           default="Enter content...")

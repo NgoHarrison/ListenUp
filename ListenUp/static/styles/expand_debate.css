@@ -20,10 +20,6 @@ li {
   float: left;
 }
 
-p {
-
-}
-
 
 .column-left{
     float: left;
@@ -50,7 +46,15 @@ p {
     width: 33.333%;
                 border-left: 10px solid #ffffff;
     border-right: 10px solid #ffffff;
-    border-bottom: 10px solid #ffffff;
+    border-bottom: 10px solid #000000;
+    box-sizing: border-box;
+}
+.box{
+
+    border-left: 10px solid #000000;
+    border-right: 10px solid #000000;
+    border-bottom: 10px solid #000000;
+    border-top: 10px solid #000000;
     box-sizing: border-box;
 }
 li a {
@@ -62,17 +66,4 @@ li a {
 }
 li a:hover:not(.active) {
   background-color: #111;
-}
-.aod{
-      list-style-type: none;
-  margin: 0;
-  padding: 30px;
-  overflow: hidden;
-}
-
-.aod_content{
-      display: block;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
 }
