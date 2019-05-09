@@ -5,23 +5,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel = "stylesheet" href = "../static/styles/signup.css"
 </head>
-<title>Edit Profile</title>
+<title>Edit Account Info</title>
 {% block body %}
 <div class = "container">
-  <h1>Edit Profile</h1>
+  <h1>Edit Account Info</h1>
 {% from "_formhelpers.html" import render_field %}
   <form method = "POST" action="">
 
     <div class="form">
-        {{ render_field(form.name,class="name") }}
+        {{ render_field(form.username,class="username") }}
     </div>
        <div class="form">
-        {{ render_field(form.bio,class="bio") }}
+        {{ render_field(form.email,class="email") }}
     </div>
-      <div class="form">
-        {{ render_field(form.location,class="location") }}
-    </div>
-    <input name = "submit" type="submit" value = "Submit">
+    <input name = "submit_button" type="submit" value = "Submit">
 
 
      </form>
