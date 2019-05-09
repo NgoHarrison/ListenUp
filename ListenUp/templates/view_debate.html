@@ -124,7 +124,36 @@ li a:hover:not(.active) {
          <p> # of Disagree: {{ left_len }}</p>
 
             <br>
-            <a href = {{ url_for('expand_debate',title=title, content=content,author_id = author_id, author = author,org_author=org_author,org_arg=org_arg) }}>     <button class="button newdebate">Add to debate</button> </a>
+            <form method = "POST" action="">
+    <div class = "title">
+        <p>
+            {{ title }}
+        </p>
+        <br>
+        <p>
+            {{ content }}
+        </p>
+        <br>
+
+
+        <div class = "a_o_d">
+            <table>
+                <tr><td><input type="radio" id="agree"name="aod" value="agree" style=""> Agree</td>
+                    <td>
+                <input type="radio" id="disagree" name="aod" value="disagree"> Disagree</td>
+            </tr>
+            </table>
+        </div>
+    </div>
+       <div class="content">
+        <input type="text" name="content" class="content" placeholder="Enter reason for opinion" value = {{ request.form.content }}>
+    </div>
+
+
+    <input type="submit" value = "Expand debate">
+
+
+     </form>
         </div>
     </div>
     <div class="column-right">

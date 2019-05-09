@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from passlib.hash import sha256_crypt
-from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate, EditProfile, EditAccount, ChangePassword
+from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate
 from ListenUp import app,db
 from .models import User,Arguments, load_user, singleArgument
 from flask_login import login_user, login_required, current_user, logout_user
@@ -54,84 +54,6 @@ def discussionhome():
 def logout():
     flash('You have successfully logged out!')
     return render_template("index.html")
-
-@app.route("/account", methods = ['GET','POST'])
-@login_required
-def account():
-    return render_template("account.html")
-
-@app.route("/profile", methods = ['GET','POST'])
-@login_required
-def profile():
-    user = current_user
-    return render_template("profile.html", user = user)
-
-
-#Route to edit profile form
-@app.route("/edit_profile", methods=['GET', 'POST'])
-def edit_profile():
-    form = EditProfile(request.form)
-
-    if request.method == 'POST' and form.validate():
-        #update profile values
-        a_user = current_user
-        a_user.name = str(form.name.data)
-        a_user.bio = str(form.bio.data)
-        a_user.location = str(form.location.data)
-        db.session.commit()
-
-
-        flash('You have successfully edited profile!', 'success')
-        return redirect(url_for('profile'))
-    return render_template("editprofile.html", form=form)
-
-#Route to edit account form
-@app.route("/edit_account", methods=['GET', 'POST'])
-def edit_account():
-    form = EditAccount(request.form)
-
-    if request.method == 'POST' and form.validate():
-        # update account values
-        a_user = current_user
-        a_user.username = str(form.username.data)
-        a_user.email = str(form.email.data)
-        db.session.commit()
-        #update values
-        #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})
-        #db.session.query(User).filter(User.email == form.email).update({'bio': 'New Foobar Name!'})
-        #db.session.commit()
-
-        flash('You have successfully edited account!', 'success')
-        return redirect(url_for('account'))
-    flash('Passwords do not much')
-    return render_template("editaccount.html", form=form)
-
-
-@app.route("/change_password", methods=['GET', 'POST'])
-def change_password():
-    form = ChangePassword(request.form)
-
-    if request.method == 'POST' and form.validate():
-
-        # update account values
-        a_user = current_user
-        pass1 = str(form.password.data)
-        pass2 = str(form.confirmpassword.data)
-        if pass1 == pass2:
-            encPass=sha256_crypt.encrypt(str(form.confirmpassword.data))
-            a_user.password = encPass
-            db.session.commit()
-            flash('You have successfully changed your password!', 'success') 
-            return redirect(url_for('account'))
-        #update values
-        #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})
-        #db.session.query(User).filter(User.email == form.email).update({'bio': 'New Foobar Name!'})
-        #db.session.commit()
-        flash('Passwords do not match', 'no success') 
-        
-       
-    return render_template("changepassword.html", form=form)
-
 
 
 @app.route("/discussionhome/view/expand", methods=['GET','POST'])
@@ -283,22 +205,69 @@ def view_debate():
                                subcontent=request.args.get('subcontent'), org_author=request.args.get('org_author'),author_id=curr_id, org_arg=request.args.get('org_arg'))
 
     else:
-        author_id = request.args.get('author_id')
-        right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+        # app.logger.info("YELLO")
+        # user = User.query.filter_by(id=load_user(current_user.get_id())).first()
+        curr_id = current_user.get_id()
+        user = load_user(curr_id)
+        # app.logger.info(curr_id)
+        # app.logger.info(user.email)
+        # app.logger.info(request.args.get('author_id'))
+        # author_id = request.args.get('author_id')
+        curr = singleArgument.query.filter_by(author_id=curr_id).first()
+        # app.logger.info(curr is None)
+        # app.logger.info(request.args.get('author_id'))
+        # app.logger.info('YERRRRRR '+str(curr))
+        form = ExpandDebate(request.form)
+        if request.method == 'POST' and form.validate():
+            a_o_d = None
+            if 'agree' in request.form:
+                a_o_d = True
+            else:
+                a_o_d = False
+            # app.logger.info("YERRRR "+str(a_o_d))
+            use = User.query.filter_by(id=curr_id).first()
+            # app.logger.info('YERRRR '+str(use.username))
+            # app.logger.info("YELLOW "+use.username)
+            expand = singleArgument(arguments_id=request.args.get('org_arg'), author_id=curr_id,
+                                    content=form.content.data, agree_or_disagree=a_o_d, username=use.username)
+            db.session.add(expand)
+            db.session.commit()
+            right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+                singleArgument.likes.desc())
+            left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+                singleArgument.likes.desc())
+            left_len = 0
+            right_len = 0
+            for arg in left_args:
+                if arg.agree_or_disagree == False:
+                    left_len += 1
+            for arg2 in right_args:
+                if arg2.agree_or_disagree == True:
+                    right_len += 1
+            return render_template('view_debate.html', title=request.args.get('title'),
+                                   arguments_id=request.args.get('argument_id'),
+                                   content=request.args.get('content'), org_author=request.args.get('org_author'),
+                                   sub_author=request.args.get('sub_author'),
+                                   curr=current_user,
+                                   right_args=right_args, left_args=left_args, left_len=left_len, right_len=right_len)
+
+        else:
+            author_id = request.args.get('author_id')
+            right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
             singleArgument.likes.desc())
-        left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+            left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
             singleArgument.likes.desc())
-        left_len = 0
-        right_len = 0
-        for arg in left_args:
-            if arg.agree_or_disagree == False:
-                left_len += 1
-        for arg2 in right_args:
-            if arg2.agree_or_disagree == True:
-                right_len += 1
+            left_len = 0
+            right_len = 0
+            for arg in left_args:
+                if arg.agree_or_disagree == False:
+                    left_len += 1
+            for arg2 in right_args:
+                if arg2.agree_or_disagree == True:
+                    right_len += 1
             # app.logger.info("YERR" + left_args[0].author.username)
 
-        return render_template('view_debate.html', title=request.args.get('title'), curr=current_user,
+            return render_template('view_debate.html', title=request.args.get('title'), curr=current_user,
                                    arguments_id=request.args.get('argument_id'),
                                    content=request.args.get('content'), org_author=request.args.get('org_author'), org_arg=request.args.get('org_arg'),
                                    author_id=author_id,

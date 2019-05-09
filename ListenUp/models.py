@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+
 from ListenUp import db,login_manager
 from datetime import datetime
 
@@ -12,15 +12,14 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model,UserMixin):
+    __tablename__='user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     arguments = db.relationship('Arguments', backref='author', lazy=True)
-    name = db.Column(db.String(64), nullable=True)
-    location = db.Column(db.String(64), nullable=True)
-    bio = db.Column(db.String(250), nullable=True)
+    single_arguments = db.relationship('singleArgument', backref='author', lazy=True)
 
 
     def __repr__(self):
