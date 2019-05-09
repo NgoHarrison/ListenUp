@@ -142,20 +142,10 @@ li a:hover:not(.active) {
   <li><a href={{ url_for('discussionhome') }}>Home</a></li>
   <li><a name = "profile" href={{ url_for('profile') }}>Profile</a></li>
   <li><a name = "account" href={{ url_for('account') }}>Account</a></li>
-  <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
+  <li style="float:right"><a name = "logout" href={{ url_for('logout') }}>Logout</a></li>
 </ul>
 
-<div class="card">
-  <img src="user.jpg" style="width:100%">
-  <h1>USERNAME: apena20</h1>
-  <p class="title">apena765@gmail.com</p>
-  <a href="#"><i class="fa fa-dribbble"></i></a>
-  <a href="#"><i class="fa fa-twitter"></i></a>
-  <a href="#"><i class="fa fa-linkedin"></i></a>
-  <a href="#"><i class="fa fa-facebook"></i></a>
-  <a href = {{ url_for('edit_account') }}>
-  <p><button name = "edit_button"> Edit Account Info</button></p>
-</div>
+
 
 <div class="container emp-profile">
             <form method="post">
