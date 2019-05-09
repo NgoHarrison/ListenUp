@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from passlib.hash import sha256_crypt
-from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate, EditProfile, EditAccount
+from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate, EditProfile, EditAccount, ChangePassword
 from ListenUp import app,db
 from .models import User,Arguments, load_user, singleArgument
 from flask_login import login_user, login_required, current_user, logout_user

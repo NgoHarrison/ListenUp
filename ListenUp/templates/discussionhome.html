@@ -67,7 +67,7 @@ li a:hover:not(.active) {
   <li><a href={{ url_for('discussionhome') }}>Home</a></li>
   <li><a name = "profile" href={{ url_for('profile') }}>Profile</a></li>
   <li><a name = "account" href={{ url_for('account') }}>Account</a></li>
-  <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
+  <li style="float:right"><a name ="logout" href={{ url_for('logout') }}>Logout</a></li>
 </ul>
 <div class = "buttons">
     <a href = {{ url_for('new_debate') }}>
