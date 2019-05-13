@@ -20,7 +20,7 @@ class User(db.Model,UserMixin):
     password = db.Column(db.String(60), nullable=False)
     arguments = db.relationship('Arguments', backref='author', lazy=True)
     single_arguments = db.relationship('singleArgument', backref='author', lazy=True)
-
+    like_dislike = db.relationship('like_dislike', backref='author', lazy=True)
 
     def __repr__(self):
         return ""
@@ -64,11 +64,15 @@ class singleArgument(db.Model):
     agree_or_disagree = db.Column(db.Boolean, default = None)
     likes=db.Column(db.Integer, default=0)
     dislikes=db.Column(db.Integer, default=0)
-
+    like_dislike = db.relationship('like_dislike',backref='singlearguments',lazy=True)
     def __repr__(self):
         return ""
 
-
+class like_dislike(db.Model):
+    __tablename = 'like_dislike'
+    id = db.Column(db.Integer, primary_key=True)
+    single_arg_id = db.Column(db.Integer,ForeignKey('singlearguments.id'), nullable=False)
+    author_id=db.Column(db.Integer,ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return ""

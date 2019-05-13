@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from passlib.hash import sha256_crypt
 from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate
 from ListenUp import app,db
-from .models import User,Arguments, load_user, singleArgument
+from .models import User,Arguments, load_user, singleArgument, like_dislike
 from flask_login import login_user, login_required, current_user, logout_user
 
 
@@ -73,8 +73,11 @@ def expand_debate():
     # app.logger.info('YERRRRRR '+str(curr))
     form = ExpandDebate(request.form)
     if request.method == 'POST' and form.validate():
+        option = request.form['aod']
+        #app.logger.info("YESSSIRRRRRR "+str(option))
+        #app.logger.info(str(option=='agree'))
         a_o_d = None
-        if 'agree' in request.form:
+        if option=='agree':
             a_o_d = True
         else:
             a_o_d = False
@@ -86,9 +89,9 @@ def expand_debate():
                                 content=form.content.data, agree_or_disagree=a_o_d, username=use.username)
         db.session.add(expand)
         db.session.commit()
-        right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+        right_args = singleArgument.query.filter_by(arguments_id=request.args.get('org_arg')).order_by(
             singleArgument.likes.desc())
-        left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+        left_args = singleArgument.query.filter_by(arguments_id=request.args.get('org_arg')).order_by(
             singleArgument.likes.desc())
         left_len = 0
         right_len = 0
@@ -98,12 +101,13 @@ def expand_debate():
         for arg2 in right_args:
             if arg2.agree_or_disagree == True:
                 right_len += 1
-        return render_template('view_debate.html', title=request.args.get('title'),
-                               arguments_id=request.args.get('argument_id'),
-                               content=request.args.get('content'), org_author=request.args.get('org_author'),
-                               sub_author=request.args.get('sub_author'),
-                               curr=current_user,
-                               right_args=right_args, left_args=left_args, left_len=left_len, right_len=right_len)
+        return render_template('view_debate.html', title=request.args.get('title'), curr=current_user,
+                                   arguments_id=request.args.get('argument_id'),
+                                   content=request.args.get('content'), org_author=request.args.get('org_author'),
+                                    org_arg=request.args.get('org_arg'),
+                                   author_id=request.args.get('author_id'),
+                                   right_args=right_args, left_args=left_args, left_len=left_len,
+                                   right_len=right_len)
 
     return render_template('expand_debate.html', title=request.args.get('title'),
                            arguments_id=request.args.get('argument_id'),
@@ -154,7 +158,7 @@ def new_debate():
         db.session.add(argument)
         db.session.commit()
         return redirect(url_for('discussionhome'))
-    return render_template('create_debate.html', title = 'New debate', form = form)
+    return render_template('create_debate.html', title = 'New debate', form = form, org_arg=request.args.get('org_arg'),author=request.args.get('author'))
 
 
 
@@ -165,6 +169,7 @@ def view_debate():
         #app.logger.info("YESSIR")
         # app.logger.info("YERRRR "+str(a_o_d))
         curr_id = current_user.get_id()
+        #app.logger.info("WE IN THIS " + str(request.args.get('argument_id')))
         user = load_user(curr_id)
         # app.logger.info(user.email)
         # app.logger.info(request.args.get('author_id'))
@@ -175,15 +180,21 @@ def view_debate():
         #expand = singleArgument(arguments_id=request.args.get('argument_id'), author_id=curr_id,
                                 #content=request.args.get('content'), agree_or_disagree=a_o_d, username=use.username)
         arg=singleArgument.query.filter_by(content=request.args.get('subcontent')).first()
-
-
+        #app.logger.info("WE IN THIS "+str(curr_id))
+        ld = like_dislike.query.filter_by(author_id=curr_id,single_arg_id=request.args.get('argument_id')).first()
         if request.args.get('likes') =="pressed":
-            arg.likes=arg.likes+1
-            #app.logger.info("OOOOOH")
-            db.session.commit()
+            if ld is None:
+                arg.likes=arg.likes+1
+                #app.logger.info("OOOOOH")
+                lod= like_dislike(single_arg_id=request.args.get('argument_id'),author_id=curr_id)
+                db.session.add(lod)
+                db.session.commit()
         else:
-            arg.dislikes=arg.dislikes+1
-            db.session.commit()
+            if ld is None:
+                arg.dislikes=arg.dislikes+1
+                lod = like_dislike(single_arg_id=request.args.get('argument_id'), author_id=curr_id)
+                db.session.add(lod)
+                db.session.commit()
         #app.logger.info("LOLOL "+request.args.get('argument_id'))
         right_args = singleArgument.query.filter_by(arguments_id=request.args.get('org_arg')).order_by(
             singleArgument.likes.desc())
@@ -205,69 +216,23 @@ def view_debate():
                                subcontent=request.args.get('subcontent'), org_author=request.args.get('org_author'),author_id=curr_id, org_arg=request.args.get('org_arg'))
 
     else:
-        # app.logger.info("YELLO")
-        # user = User.query.filter_by(id=load_user(current_user.get_id())).first()
-        curr_id = current_user.get_id()
-        user = load_user(curr_id)
-        # app.logger.info(curr_id)
-        # app.logger.info(user.email)
-        # app.logger.info(request.args.get('author_id'))
-        # author_id = request.args.get('author_id')
-        curr = singleArgument.query.filter_by(author_id=curr_id).first()
-        # app.logger.info(curr is None)
-        # app.logger.info(request.args.get('author_id'))
-        # app.logger.info('YERRRRRR '+str(curr))
-        form = ExpandDebate(request.form)
-        if request.method == 'POST' and form.validate():
-            a_o_d = None
-            if 'agree' in request.form:
-                a_o_d = True
-            else:
-                a_o_d = False
-            # app.logger.info("YERRRR "+str(a_o_d))
-            use = User.query.filter_by(id=curr_id).first()
-            # app.logger.info('YERRRR '+str(use.username))
-            # app.logger.info("YELLOW "+use.username)
-            expand = singleArgument(arguments_id=request.args.get('org_arg'), author_id=curr_id,
-                                    content=form.content.data, agree_or_disagree=a_o_d, username=use.username)
-            db.session.add(expand)
-            db.session.commit()
-            right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
-                singleArgument.likes.desc())
-            left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
-                singleArgument.likes.desc())
-            left_len = 0
-            right_len = 0
-            for arg in left_args:
-                if arg.agree_or_disagree == False:
-                    left_len += 1
-            for arg2 in right_args:
-                if arg2.agree_or_disagree == True:
-                    right_len += 1
-            return render_template('view_debate.html', title=request.args.get('title'),
-                                   arguments_id=request.args.get('argument_id'),
-                                   content=request.args.get('content'), org_author=request.args.get('org_author'),
-                                   sub_author=request.args.get('sub_author'),
-                                   curr=current_user,
-                                   right_args=right_args, left_args=left_args, left_len=left_len, right_len=right_len)
 
-        else:
-            author_id = request.args.get('author_id')
-            right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
-            singleArgument.likes.desc())
-            left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
-            singleArgument.likes.desc())
-            left_len = 0
-            right_len = 0
-            for arg in left_args:
-                if arg.agree_or_disagree == False:
-                    left_len += 1
-            for arg2 in right_args:
-                if arg2.agree_or_disagree == True:
-                    right_len += 1
+        author_id = request.args.get('author_id')
+        right_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+        singleArgument.likes.desc())
+        left_args = singleArgument.query.filter_by(arguments_id=request.args.get('argument_id')).order_by(
+        singleArgument.likes.desc())
+        left_len = 0
+        right_len = 0
+        for arg in left_args:
+            if arg.agree_or_disagree == False:
+                left_len += 1
+        for arg2 in right_args:
+            if arg2.agree_or_disagree == True:
+                right_len += 1
             # app.logger.info("YERR" + left_args[0].author.username)
 
-            return render_template('view_debate.html', title=request.args.get('title'), curr=current_user,
+        return render_template('view_debate.html', title=request.args.get('title'), curr=current_user,
                                    arguments_id=request.args.get('argument_id'),
                                    content=request.args.get('content'), org_author=request.args.get('org_author'), org_arg=request.args.get('org_arg'),
                                    author_id=author_id,
