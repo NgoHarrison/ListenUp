@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from passlib.hash import sha256_crypt
-from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate
+from .forms import SignupForm, LoginForm,PostArgument, ExpandDebate, editDebate, EditProfile, EditAccount, ChangePassword
 from ListenUp import app,db
 from .models import User,Arguments, load_user, singleArgument, like_dislike
 from flask_login import login_user, login_required, current_user, logout_user
@@ -54,6 +54,83 @@ def discussionhome():
 def logout():
     flash('You have successfully logged out!')
     return render_template("index.html")
+
+@app.route("/account", methods = ['GET','POST'])
+@login_required
+def account():
+    return render_template("account.html")
+
+@app.route("/profile", methods = ['GET','POST'])
+@login_required
+def profile():
+    user = current_user
+    return render_template("profile.html", user = user)
+
+@app.route("/edit_profile", methods=['GET', 'POST'])
+def edit_profile():
+    form = EditProfile(request.form)
+
+    if request.method == 'POST' and form.validate():
+        #update profile values
+        a_user = current_user
+        a_user.name = str(form.name.data)
+        a_user.bio = str(form.bio.data)
+        a_user.location = str(form.location.data)
+        db.session.commit()
+
+
+        flash('You have successfully edited profile!', 'success')
+        return redirect(url_for('profile'))
+    return render_template("editprofile.html", form=form)
+
+
+@app.route("/edit_account", methods=['GET', 'POST'])
+def edit_account():
+    form = EditAccount(request.form)
+
+    if request.method == 'POST' and form.validate():
+        # update account values
+        a_user = current_user
+        a_user.username = str(form.username.data)
+        a_user.email = str(form.email.data)
+        db.session.commit()
+        #update values
+        #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})
+        #db.session.query(User).filter(User.email == form.email).update({'bio': 'New Foobar Name!'})
+        #db.session.commit()
+
+        flash('You have successfully edited account!', 'success')
+        return redirect(url_for('account'))
+    flash('Passwords do not much')
+    return render_template("editaccount.html", form=form)
+
+
+
+@app.route("/change_password", methods=['GET', 'POST'])
+def change_password():
+    form = ChangePassword(request.form)
+
+    if request.method == 'POST' and form.validate():
+
+        # update account values
+        a_user = current_user
+        pass1 = str(form.password.data)
+        pass2 = str(form.confirmpassword.data)
+        if pass1 == pass2:
+            encPass=sha256_crypt.encrypt(str(form.confirmpassword.data))
+            a_user.password = encPass
+            db.session.commit()
+            flash('You have successfully changed your password!', 'success') 
+            return redirect(url_for('account'))
+        #update values
+        #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})
+        #db.session.query(User).filter(User.email == form.email).update({'bio': 'New Foobar Name!'})
+        #db.session.commit()
+        flash('Passwords do not match', 'no success') 
+        
+       
+    return render_template("changepassword.html", form=form)
+
 
 
 @app.route("/discussionhome/view/expand", methods=['GET','POST'])
