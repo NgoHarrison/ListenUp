@@ -21,7 +21,12 @@ class User(db.Model,UserMixin):
     arguments = db.relationship('Arguments', backref='author', lazy=True)
     single_arguments = db.relationship('singleArgument', backref='author', lazy=True)
     like_dislike = db.relationship('like_dislike', backref='author', lazy=True)
+    name = db.Column(db.String(64), nullable=True)
+    location = db.Column(db.String(64), nullable=True)
+    bio = db.Column(db.String(250), nullable=True)
 
+    
+    
     def __repr__(self):
         return ""
 
