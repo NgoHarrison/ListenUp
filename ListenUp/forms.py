@@ -31,7 +31,7 @@ class LoginForm(Form):
         validators.EqualTo('confirmpassword', message='Your passwords do not match')
     ], render_kw={"placeholder": "Enter your password..."})
 
-    class EditProfile(Form):
+class EditProfile(Form):
     #photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
     name = StringField('name', [validators.Length(min=3, max=30)],
                            render_kw={"placeholder": "Enter your name..."})
