@@ -31,6 +31,29 @@ class LoginForm(Form):
         validators.EqualTo('confirmpassword', message='Your passwords do not match')
     ], render_kw={"placeholder": "Enter your password..."})
 
+    class EditProfile(Form):
+    #photo = FileField(validators=[FileAllowed(photos, u'Image only!'), FileRequired(u'File was empty!')])
+    name = StringField('name', [validators.Length(min=3, max=30)],
+                           render_kw={"placeholder": "Enter your name..."})
+    bio = StringField('bio', [validators.Length(min=6, max=250), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a bio..."})
+    location = StringField('location', [validators.Length(min=6, max=200), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a location..."})
+
+class EditAccount(Form):
+    username = StringField('username', [validators.Length(min=3, max=30)],
+                           render_kw={"placeholder": "Enter a new username..."})
+    email = StringField('email', [validators.Length(min=6, max=250), validators.DataRequired()],
+                        render_kw={"placeholder": "Enter a new email..."})
+
+
+class ChangePassword(Form):
+    password = StringField('password', [validators.Length(min=3, max=30)],
+                           render_kw={"placeholder": "Enter a new password..."})
+    confirmpassword = StringField('confirm password', [validators.Length(min=6, max=250), validators.DataRequired()],
+                        render_kw={"placeholder": "Confirm password..."})
+
+    
 class PostArgument(Form):
     title = StringField('Title', [validators.Length(min=3, max=25)],
                            render_kw={"placeholder": "Enter title..."})
