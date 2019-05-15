@@ -48,10 +48,12 @@ class EditAccount(Form):
 
 
 class ChangePassword(Form):
-    password = StringField('password', [validators.Length(min=3, max=30)],
-                           render_kw={"placeholder": "Enter a new password..."})
-    confirmpassword = StringField('confirm password', [validators.Length(min=6, max=250), validators.DataRequired()],
-                        render_kw={"placeholder": "Confirm password..."})
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirmpassword', message='Your passwords do not match')
+    ], render_kw={"placeholder": "Enter your password..."})
+    confirmpassword = PasswordField('Confirm password', [validators.DataRequired()],
+                                    render_kw={"placeholder": "Re-enter your password..."})
 
     
 class PostArgument(Form):

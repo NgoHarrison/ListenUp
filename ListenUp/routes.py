@@ -79,7 +79,7 @@ def edit_profile():
         db.session.commit()
 
 
-        flash('You have successfully edited profile!', 'success')
+        #flash('You have successfully edited profile!', 'success')
         return redirect(url_for('profile'))
     return render_template("editprofile.html", form=form)
 
@@ -120,7 +120,7 @@ def change_password():
             encPass=sha256_crypt.encrypt(str(form.confirmpassword.data))
             a_user.password = encPass
             db.session.commit()
-            flash('You have successfully changed your password!', 'success') 
+            #flash('You have successfully changed your password!', 'success')
             return redirect(url_for('account'))
         #update values
         #db.session.query(User).filter(User.username == form.username).update({'name': str(form.username),})

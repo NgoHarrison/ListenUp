@@ -88,8 +88,8 @@ li a:hover:not(.active) {
 <body>
 <ul>
   <li><a href={{ url_for('discussionhome') }}>Home</a></li>
-  <li><a href="">Profile</a></li>
-  <li><a href="">Account</a></li>
+    <li><a name = "profile" href={{ url_for('profile') }}>Profile</a></li>
+  <li><a name = "account" href={{ url_for('account') }}>Account</a></li>
   <li style="float:right"><a href={{ url_for('logout') }}>Logout</a></li>
 </ul>
 <div class="row">
@@ -159,9 +159,10 @@ li a:hover:not(.active) {
 
               <a href ={{ url_for('view_debate', title=title, content=content,subcontent = rarg.content, author_id = author_id, author = author,org_author=org_author, argument_id=rarg.id, likes="pressed",org_arg=org_arg) }}> <i class="fa fa-thumbs-up"></i></a>{{ rarg.likes }}
               <a href ={{ url_for('view_debate', title=title, content=content,subcontent = rarg.content, author_id = author_id, author = author, org_author=org_author,argument_id=rarg.id, dislikes="pressed",org_arg=org_arg) }}> <i class="fa fa-thumbs-down"></i></a> {{ rarg.dislikes }}
-          {% endif %}
-        {% endfor %}
+
     </div>
+     {% endif %}
+        {% endfor %}
 </div>
 </div>
 </body>
